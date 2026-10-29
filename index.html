@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#101827">
+    <title>Smart Expense Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app">
+        <header class="topbar">
+            <a class="brand" href="#">
+                <span class="brand-icon">₹</span>
+                <span>Smart<span class="brand-light">Track</span></span>
+            </a>
+            <div class="top-right">
+                <span class="live-dot"></span>
+                <span>Personal Finance</span>
+            </div>
+        </header>
+
+        <main>
+            <section class="welcome">
+                <div>
+                    <p class="eyebrow">YOUR MONEY, YOUR CONTROL</p>
+                    <h1>Expense <span>Dashboard</span></h1>
+                    <p class="subtitle">Understand your spending. Build better habits.</p>
+                </div>
+                <div class="date-badge" id="today-date"></div>
+            </section>
+
+            <section class="summary-grid">
+                <article class="summary-card balance-card">
+                    <div class="card-top">
+                        <span>Available Balance</span>
+                        <span class="card-icon">₹</span>
+                    </div>
+                    <h2 id="balance">₹0.00</h2>
+                    <p>Your income minus your expenses</p>
+                </article>
+
+                <article class="summary-card">
+                    <div class="card-top">
+                        <span>Total Income</span>
+                        <span class="card-icon income-icon">↗</span>
+                    </div>
+                    <h2 id="income">₹0.00</h2>
+                    <p class="muted">Money received</p>
+                </article>
+
+                <article class="summary-card">
+                    <div class="card-top">
+                        <span>Total Expenses</span>
+                        <span class="card-icon expense-icon">↘</span>
+                    </div>
+                    <h2 id="expenses">₹0.00</h2>
+                    <p class="muted">Money spent</p>
+                </article>
+            </section>
+
+            <section class="content-grid">
+                <article class="panel add-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">RECORD YOUR MONEY</p>
+                            <h2>Add Transaction</h2>
+                        </div>
+                        <span class="heading-icon">＋</span>
+                    </div>
+
+                    <form id="transaction-form">
+                        <label for="description">Description</label>
+                        <input id="description" type="text"
+                            placeholder="e.g. Hostel food" maxlength="80" required>
+
+                        <div class="form-row">
+                            <div>
+                                <label for="amount">Amount (₹)</label>
+                                <input id="amount" type="number"
+                                    placeholder="0.00" min="0.01"
+                                    max="1000000000" step="0.01" required>
+                            </div>
+                            <div>
+                                <label for="type">Type</label>
+                                <select id="type">
+                                    <option value="expense">Expense</option>
+                                    <option value="income">Income</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <label for="category">Category</label>
+                        <select id="category">
+                            <option value="Food">🍔 Food</option>
+                            <option value="Travel">🚌 Travel</option>
+                            <option value="Education">📚 Education</option>
+                            <option value="Shopping">🛍️ Shopping</option>
+                            <option value="Bills">🧾 Bills</option>
+                            <option value="Health">💊 Health</option>
+                            <option value="Salary">💼 Salary</option>
+                            <option value="Other">📌 Other</option>
+                        </select>
+
+                        <label for="date">Date</label>
+                        <input id="date" type="date" required>
+
+                        <button class="primary-button" type="submit">
+                            <span>＋</span> Add Transaction
+                        </button>
+                        <p class="form-note">Your records are saved in this browser.</p>
+                    </form>
+                </article>
+
+                <article class="panel chart-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">YOUR SPENDING BREAKDOWN</p>
+                            <h2>Expense Categories</h2>
+                        </div>
+                        <span class="heading-icon">▥</span>
+                    </div>
+
+                    <div class="chart-total">
+                        <span>Total expenses</span>
+                        <strong id="chart-total">₹0.00</strong>
+                    </div>
+                    <div id="category-chart" class="category-chart">
+                        <p class="empty-chart">Add an expense to see your chart.</p>
+                    </div>
+                    <div class="chart-footer">
+                        <span class="legend-dot"></span>
+                        <span>Spending by category</span>
+                    </div>
+                </article>
+            </section>
+
+            <section class="panel transactions-panel">
+                <div class="transactions-heading">
+                    <div>
+                        <p class="eyebrow">YOUR FINANCIAL ACTIVITY</p>
+                        <h2>Transaction History</h2>
+                        <p class="muted" id="transaction-count">0 transactions</p>
+                    </div>
+                    <button class="secondary-button" id="export-button" type="button">
+                        ↓ Export CSV
+                    </button>
+                </div>
+
+                <div class="filters">
+                    <div class="search-wrap">
+                        <span>⌕</span>
+                        <input id="search" type="search"
+                            placeholder="Search transactions...">
+                    </div>
+                    <select id="filter-type" aria-label="Filter by type">
+                        <option value="all">All types</option>
+                        <option value="income">Income</option>
+                        <option value="expense">Expenses</option>
+                    </select>
+                    <select id="filter-category" aria-label="Filter by category">
+                        <option value="all">All categories</option>
+                        <option value="Food">Food</option>
+                        <option value="Travel">Travel</option>
+                        <option value="Education">Education</option>
+                        <option value="Shopping">Shopping</option>
+                        <option value="Bills">Bills</option>
+                        <option value="Health">Health</option>
+                        <option value="Salary">Salary</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Category</th>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th class="amount-column">Amount</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transaction-list"></tbody>
+                    </table>
+                </div>
+                <p id="empty-message" class="empty-message">
+                    No transactions yet. Add your first transaction above!
+                </p>
+            </section>
+
+            <footer>
+                <p>SmartTrack <span>•</span> Simple money management</p>
+                <p>Your financial data stays in your browser.</p>
+            </footer>
+        </main>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="script.js"></script>
+</body>
+</html>
